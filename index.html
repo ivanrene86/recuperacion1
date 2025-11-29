@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORITINA Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Header Principal */
+        .header-top {
+            background-color: #1a2332;
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #email {
+            width: auto;
+            font-size: 15px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 10px;
+        }
+
+        ::-webkit-input-placeholder {
+            color: rgba(255, 255, 255, 0.238);
+        }
+
+        input {
+            width: auto;
+            font-size: 15px;
+            background-color: #1a2332;
+            color: white;
+            border: none;
+            padding: 10px;
+        }
+
+        ::-webkit-input-placeholder {
+            color: rgba(255, 255, 255, 0.238);
+        }
+
+        .search-icon {
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            gap: 20px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            align-items: end;
+            color: white;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .icon-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .icon-item span {
+            font-weight: 500;
+        }
+
+        .cart-count {
+            background-color: #ff9f43;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: bold;
+            width: auto;
+        }
+
+        .menu-icon {
+            font-size: 15px;
+        }
+
+        /* Navegación */
+        .navigation {
+            background-color: white;
+            padding: 0px 50px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .nav-menu li {
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            position: relative;
+            padding: 0 5px;
+            padding-right: 20px;
+            /* Espacio para la flecha */
+
+            /* Restauramos el padding superior/inferior para el texto,
+       ya que el borde ya no estará directamente en el <li> */
+            padding-top: 10px;
+            /* Ajusta según el diseño general */
+            padding-bottom: 10px;
+            /* Ajusta según el diseño general */
+
+            color: #333;
+            /* Color por defecto del texto */
+            transition: color 0.3s;
+        }
+
+        .nav-menu li.active {
+            color: #ff6b35;
+        }
+
+        .nav-menu li.active::before {
+            content: '';
+            /* Contenido vacío para el pseudo-elemento */
+            position: absolute;
+            top: 0;
+            /* Lo pega al borde superior del <li> padre (que es el contenedor del menú) */
+            left: 0;
+            width: 100%;
+            /* Cubre todo el ancho del <li> */
+            height: 3px;
+            /* El grosor de tu borde */
+            background-color: #ff6b35;
+            /* El color naranja */
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu li:not(.active) {
+            color: #333;
+        }
+
+        .nav-menu li::after {
+            content: '▼';
+            /* El carácter de un triángulo o flecha hacia abajo */
+            font-size: 8px;
+            /* Tamaño pequeño para que se vea sutil */
+            color: #333;
+            position: absolute;
+            right: 5px;
+            /* Posiciona la flecha a la derecha, dejando un margen */
+            top: 60%;
+            transform: translateY(-50%);
+            transition: transform 0.3s;
+        }
+
+        .nav-menu li.active::before {
+            content: '';
+            /* Contenido vacío para el pseudo-elemento */
+            position: absolute;
+            top: 0;
+            /* Lo pega al borde superior del <li> padre (que es el contenedor del menú) */
+            left: 0;
+            width: 100%;
+            /* Cubre todo el ancho del <li> */
+            height: 3px;
+            /* El grosor de tu borde */
+            background-color: #ff6b35;
+            /* El color naranja */
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu li.active::after {
+            color: #ff6b35;
+            /* Naranja (mismo color que el texto activo) */
+        }
+
+        /* 🔄 Opcional: Rotar la flecha al abrir el menú */
+        .nav-menu li:hover::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .dropdown-menu {
+            list-style: none;
+            position: absolute;
+            top: 100%;
+            /* Coloca el submenú justo debajo del elemento principal */
+            left: 50%;
+            /* Centra el menú en X */
+            transform: translateX(-50%);
+            /* Ajuste de centrado en X */
+            background-color: white;
+            /* Fondo blanco para las opciones */
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            /* Asegura que el submenú esté por encima de otros elementos */
+            min-width: 150px;
+            padding: 10px 0;
+            /* Por defecto, ocultamos el submenú */
+            display: none;
+            text-align: left;
+            white-space: nowrap;
+            /* Evita que el texto de las opciones se rompa */
+        }
+
+        .dropdown-menu li {
+            padding: 10px 15px;
+            /* Espacio interno para las opciones del submenú */
+            font-size: 13px;
+            font-weight: 400;
+            /* Menos negrita que el menú principal */
+            color: #333;
+            transition: background-color 0.2s, color 0.2s;
+            text-transform: none;
+            /* No en mayúsculas como el menú principal */
+            letter-spacing: normal;
+        }
+
+        .dropdown-menu li:hover {
+            background-color: #f5f5f5;
+            /* Color de fondo al pasar el ratón */
+            color: #ff6b35;
+            /* Color de texto al pasar el ratón */
+        }
+
+        /* Regla para mostrar el submenú al pasar el ratón sobre el ítem principal */
+        .nav-menu li:hover>.dropdown-menu {
+            display: block;
+        }
+
+        /* Opcional: Para evitar que el color naranja del ".active" afecte al submenú */
+        .dropdown-menu li.active {
+            color: #333;
+        }
+
+        /* Banner Principal */
+        .main-banner {
+            background: linear-gradient(to right, #00d4d4 0%, #00d4d4 50%, #4dd4ff 50%, #4dd4ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0;
+            position: relative;
+            min-height: 400px;
+        }
+
+        .two {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: left;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        #text-invisible {
+            color: #1a2332;
+        }
+
+        .banner-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 50px;
+        }
+
+        .product-slide {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .product-slide .slide-category {
+            /* 1. Estilo y Color */
+            font-size: 50px; /* Tamaño grande */
+            font-weight: bold; /* Fuente delgada */
+            font-family: 'Times New Roman', Times, serif;
+            color: rgba(255, 255, 255, 0.2); /* Blanco muy transparente para que se vea sutil */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            
+            /* 2. Posicionamiento */
+            position: absolute; /* Permite posicionarlo libremente */
+            top: 90%; /* Distancia desde el fondo del banner */
+            left: 50%;
+            transform: translateX(-50%); /* Centrar horizontalmente */
+            /* 3. Profundidad (para que quede "al fondo" del h3) */
+            z-index: 1; 
+        }
+
+        .product-slide img {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .product-slide h3 {
+            position: relative; /* Es necesario para z-index */
+            z-index: 5;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .banner-arrow {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 40px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .banner-arrow:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .banner-arrow.left {
+            left: 30px;
+        }
+
+        .banner-arrow.right {
+            right: 30px;
+        }
+
+        /* Barra de Logos de Marcas */
+        .brands-section {
+            background-color: #f8f8f8;
+            padding: 30px 50px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .brands-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            flex: 1;
+            text-align: center;
+            min-width: 100px;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+
+        .brand-logo:hover {
+            opacity: 1;
+        }
+
+        .brand-logo img {
+            width: 40px;
+            height: 40px;
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+        }
+
+        .brand-logo:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* Sección de Tarjetas de Productos */
+        .featured-products {
+            display: flex;
+            width: 100%;
+        }
+
+        .product-card {
+            flex: 1;
+            padding: 80px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .star-yellow {
+            color: #ffc107;
+            /* Un código hex para un amarillo estándar de estrella */
+            /* O puedes usar el naranja de tu tema si lo prefieres: #ff6b35 */
+            font-size: 16px;
+            /* Ajusta el tamaño según sea necesario */
+            opacity: 0.3;
+        }
+
+        .product-card::before {
+            /* ❌ Eliminamos content: url(...) que causa problemas de redimensionamiento */
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 100px;
+            /* Tamaño del contenedor del icono */
+            height: 100px;
+            /* Tamaño del contenedor del icono */
+
+            /* 🆕 Usamos background-image y background-size para cargar y redimensionar la imagen */
+            background-image: url('./Captura_de_pantalla_2025-11-20_142756-removebg-preview.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            /* Ajusta la imagen al tamaño del contenedor (50px x 50px) */
+            /* background-color: red; /* Útil para depurar la posición */
+        }
+
+        .product-card.coral {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+        }
+
+        .product-card.light {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d4e8f0 100%);
+        }
+
+        .product-card.yellow {
+            background: linear-gradient(135deg, #ffd93d 0%, #ffb52e 100%);
+        }
+
+        .newsletter-input::-webkit-input-placeholder {
+            color: rgba(57, 57, 57, 0.7); 
+            font-size: 13px;
+        }
+
+        .product-card img {
+            max-width: 250px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        #letra-sola {
+            background-color: gray;
+            padding: 10px;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            border-radius: 50%;
+            font-size: 15px;
+            width: 40px;
+        }
+
+        .shop-now-btn {
+            background-color: white;
+            color: #333;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .shop-now-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Sección Our Products */
+        .our-products-section {
+            padding: 80px 50px;
+            background-color: #fff;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Tabs de Productos */
+        .product-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 50px;
+            padding-bottom: 15px;
+        }
+
+        .tab-item {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .tab-item.active {
+            color: #ff6b35;
+        }
+
+        .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -17px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #ff6b35;
+        }
+
+        .tab-item:hover {
+            color: #ff6b35;
+        }
+
+        /* Grid de Productos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+
+        .product-item {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .product-item h4 {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 500;
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-item .price {
+            font-size: 16px;
+            color: #ff6b35;
+            font-weight: bold;
+        }
+
+        /* Botón Load More */
+        .load-more-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .load-more-btn {
+            background-color: #333;
+            color: white;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .load-more-btn:hover {
+            background-color: #ff6b35;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        /* Sección Instagram */
+        .instagram-section {
+            background-color: #fafafa;
+            padding: 80px 0 0 0;
+        }
+
+        .instagram-title {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 0 50px;
+        }
+
+        .instagram-title h2 {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .instagram-subtitle {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 40px;
+            letter-spacing: 0.5px;
+        }
+
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0;
+            width: 100%;
+        }
+
+        .instagram-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .instagram-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .instagram-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .instagram-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .instagram-item:hover .instagram-overlay {
+            opacity: 1;
+        }
+
+        .instagram-icon {
+            color: white;
+            font-size: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .instagram-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Sección de Garantías */
+        .guarantees-section {
+            padding: 80px 20px;
+            background-color: #fff;
+        }
+
+        .guarantees-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 100px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .guarantee-item {
+            text-align: center;
+        }
+
+        .guarantee-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #ff6b35;
+        }
+
+        .guarantee-item h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            ;
+        }
+
+        .guarantee-item p {
+            font-size: 14px;
+            color: #999;
+            line-height: 1.8;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .guarantees-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1a2332;
+            color: white;
+            padding: 60px 20px 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr 2fr;
+            gap: 80px;
+            max-width: 1400px;
+            margin: 0 auto 60px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li:hover {
+            color: #ff6b35;
+        }
+
+        /* Newsletter */
+        .newsletter-form {
+            display: flex;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 15px 50px;
+            border: none;
+            font-size: 13px;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        .newsletter-btn {
+            background-color: #ff6b35;
+            color: white;
+            padding: 12px 50px;
+            border: none;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+
+        .newsletter-btn:hover {
+            background-color: #ff8e53;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #999;
+            line-height: 1.6;
+        }
+
+        .contact-item span {
+            margin-right: 10px;
+            color: #ff6b35;
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 18px;
+        }
+
+        .social-icon:hover {
+            background-color: #ff6b35;
+            transform: translateY(-3px);
+        }
+
+        /* Copyright */
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 25px;
+            background-color: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* ---------------------------------- */
+        /* MEDIA QUERIES - RESPONSIVE DESIGN */
+        /* ---------------------------------- */
+
+        /* Para pantallas grandes/medianas (Tabletas y Escritorios pequeños) */
+        @media (max-width: 1200px) {
+            .header-top,
+            .navigation {
+                padding: 20px 30px;
+            }
+
+            .nav-menu {
+                gap: 20px;
+            }
+
+            .footer-content {
+                gap: 40px;
+            }
+
+            .guarantees-container {
+                gap: 50px;
+            }
+        }
+
+        /* Para tabletas y móviles */
+        @media (max-width: 768px) {
+            /* 1. Header */
+            .header-top {
+                flex-direction: column;
+                padding: 20px 30px;
+                text-align: center;
+                gap: 15px;
+            }
+
+            input {
+                border: 1px solid rgba(255, 255, 255, 0.237)
+            }
+
+            .two {
+                flex-direction: row;
+                margin: 0;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            #text-inivisible{
+                font-size: 1px;
+            }
+
+            .search-icon {
+                order: 3;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+
+            .search-icon input {
+                width: 80%;
+            }
+
+            .header-icons {
+                order: 2;
+                font-size: 10px;
+                gap: 10px;
+            }
+
+            /* 2. Navegación - Ocultar en móvil para usar el icono hamburguesa (☰) */
+            .navigation {
+                display: none;
+            }
+
+            /* 3. Banner Principal */
+            .main-banner {
+                min-height: 300px;
+                padding: 40px 0;
+            }
+
+            .banner-content {
+                flex-direction: column;
+                gap: 30px;
+                padding: 0 20px;
+            }
+
+            .product-slide img {
+                max-width: 200px;
+            }
+
+            .banner-arrow.left {
+                left: 10px;
+            }
+
+            .banner-arrow.right {
+                right: 10px;
+            }
+
+            /* 4. Marcas */
+            .brands-container {
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .brand-logo {
+                min-width: 50px;
+                flex: 0 0 calc(25% - 10px); /* 4 logos por fila */
+            }
+
+            /* 5. Productos Destacados */
+            .featured-products {
+                flex-direction: column; /* Apilar las tarjetas */
+            }
+
+            .product-card {
+                padding: 60px 20px;
+            }
+
+            /* 6. Nuestros Productos */
+            .our-products-section {
+                padding: 60px 20px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr); /* De 4 a 2 columnas */
+                gap: 15px;
+            }
+
+            .product-item img {
+                height: 200px;
+            }
+
+            /* 7. Instagram */
+            .instagram-grid {
+                grid-template-columns: repeat(3, 1fr); /* De 5 a 3 columnas */
+            }
+
+            /* 8. Garantías */
+            .guarantees-container {
+                grid-template-columns: 1fr; /* Apilar en una sola columna */
+                gap: 30px;
+            }
+
+            .guarantee-icon {
+                font-size: 40px;
+            }
+
+            /* 9. Footer */
+            .footer {
+                padding: 40px 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr; /* Apilar en una sola columna */
+                gap: 30px;
+            }
+
+            .footer-column {
+                text-align: center;
+            }
+
+            .footer-column ul {
+                padding: 0;
+            }
+
+            .footer-column ul li {
+                text-align: center;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-input {
+                width: 100%;
+                text-align: center;
+            }
+
+            .contact-item {
+                justify-content: center;
+            }
+
+            /* 10. Footer Bottom */
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .payment-methods {
+                justify-content: center;
+            }
+        }
+
+        /* Ajuste para móviles muy pequeños */
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr; /* De 2 a 1 columna */
+            }
+            .instagram-grid {
+                grid-template-columns: repeat(2, 1fr); /* De 3 a 2 columnas */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Superior -->
+    <div class="header-top">
+        <div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i> <input type="search" placeholder="Type here what you want"></div>
+        <div class="logo">ORITINA</div>
+        <div class="header-icons">
+            <div class="icon-item">
+                <span><i class="fa-solid fa-heart"></i></span>
+                <span>WISHLIST</span>
+            </div>
+            <div class="icon-item two">
+                <div>
+                    <span class="cart-count">0</span><span id="text-invisible">dfkh</span>
+                </div>
+                <div>
+                    <span><i class="fa-solid fa-bag-shopping"></i></span>
+                    <span>CART</span>
+                </div>
+            </div>
+            <div class="icon-item menu-icon">☰</div>
+        </div>
+    </div>
+
+    <!-- Navegación -->
+    <div class="navigation">
+        <ul class="nav-menu">
+            <li class="active">
+                <br>
+                HOME
+                <ul class="dropdown-menu">
+                    <li>Opción de Home 1</li>
+                    <li>Opción de Home 2</li>
+                    <li>Opción de Home 3</li>
+                </ul>
+            </li>
+            <li><br>PAGE
+                <ul class="dropdown-menu">
+                    <li>Opción de Page A</li>
+                    <li>Opción de Page B</li>
+                    <li>Opción de Page C</li>
+                </ul>
+            </li>
+            <li><br>BLOG
+                <ul class="dropdown-menu">
+                    <li>Opción de Blog X</li>
+                    <li>Opción de Blog Y</li>
+                    <li>Opción de Blog Z</li>
+                </ul>
+            </li>
+            <li><br>CONTACT US
+                <ul class="dropdown-menu">
+                    <li>Opción de Contacto 1</li>
+                    <li>Opción de Contacto 2</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Banner Principal -->
+    <div class="main-banner">
+        <div class="banner-arrow left"><</div>
+        <div class="banner-content">
+            <div class="product-slide">
+                <img src="🔥 Bold Streetwear Logo Design _ Modern T-Shirt Branding Idea.png" alt="White T-Shirt">
+                <h3>Summer Hipster Collection</h3>
+                <p class="slide-category">WOMEN</p>
+            </div>
+            <div class="product-slide">
+                <img src="descarga (1).png" alt="Gray T-Shirt">
+                <h3>Summer Hipster Collection</h3>
+                <p class="slide-category">MEN</p>
+            </div>
+        </div>
+        <div class="banner-arrow right">></div>
+    </div>
+
+    <!-- Barra de Logos de Marcas -->
+    <div class="brands-section">
+        <div class="brands-container">
+            <div class="brand-logo">
+                <img src="icons8-centro-comercial-64.png" alt="Target">
+            </div>
+            <div class="brand-logo">
+                <img src="icons8-chaqueta-64.png" alt="Topshop">
+            </div>
+            <div class="brand-logo">
+                <img src="icons8-compras-32.png" alt="Zara">
+            </div>
+            <div class="brand-logo">
+                <img src="icons8-compras-58.png" alt="Woody">
+            </div>
+            <div class="brand-logo">
+                <img src="icons8-enlace-60.png" alt="Levis">
+            </div>
+            <div class="brand-logo">
+                <img src="icons8-finanzas-64.png" alt="Brand">
+            </div>
+            <div class="brand-logo">
+                <img src="icons8-instagram-24.png" alt="Converse">
+            </div>
+            <div class="brand-logo">
+                <img src="icons8-internet-32.png" alt="Partner">
+            </div>
+            <div class="brand-logo">
+                <img src="icons8-música-64.png" alt="Adidas">
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjetas de Productos Destacados -->
+    <div class="featured-products">
+        <div class="product-card coral">
+            <img src="descarga (2).png" alt="Navy T-Shirt">
+            <button class="shop-now-btn">SHOP NOW</button>
+        </div>
+        <div class="product-card light">
+            <img src="descarga (3).png" alt="White Skull T-Shirt">
+            <button class="shop-now-btn">SHOP NOW</button>
+        </div>
+        <div class="product-card yellow">
+            <img src="descarga (4).png" alt="Black T-Shirt">
+            <button class="shop-now-btn">SHOP NOW</button>
+        </div>
+    </div>
+
+    <!-- Sección Our Products -->
+    <div class="our-products-section">
+        <div class="section-title">
+            <h2>OUR PRODUCTS</h2>
+            <h4 style="margin-bottom: 30px; color: #999; margin-top: 10px;">Architecto doloremque quidem</h4>
+            <div class="product-tabs">
+                <div class="tab-item active">New Arrivals</div>
+                <div class="tab-item">Best Seller</div>
+                <div class="tab-item">Featured</div>
+            </div>
+        </div>
+
+        <div class="products-grid">
+            <!-- Fila 1 -->
+            <div class="product-item">
+                <img src="descarga (5).png" alt="Product 1">
+                <div class="product-rating">
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                </div>
+                <h4>Polar Skate Co Devil T Shirt</h4>
+                <p class="price">$65.00</p>
+            </div>
+            <div class="product-item">
+                <img src="descarga (6).png" alt="Product 2">
+                <div class="product-rating">
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                </div>
+                <h4>Polar Skate Co Devil T Shirt</h4>
+                <p class="price">$65.00</p>
+            </div>
+            <div class="product-item">
+                <img src="descarga (7).png" alt="Product 3">
+                <div class="product-rating">
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                </div>
+                <h4>Polar Skate Co Devil T Shirt</h4>
+                <p class="price">$18.00</p>
+            </div>
+            <div class="product-item">
+                <img src="descarga (8).png" alt="Product 4">
+                <div class="product-rating">
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                </div>
+                <h4>Polar Skate Co Devil T Shirt</h4>
+                <p class="price">$65.00</p>
+            </div>
+
+            <!-- Fila 2 -->
+            <div class="product-item">
+                <img src="descarga.png" alt="Product 5">
+                <div class="product-rating">
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                </div>
+                <h4>Polar Skate Co Devil T Shirt</h4>
+                <p class="price">$65.00</p>
+            </div>
+            <div class="product-item">
+                <img src="https___advantees_com_product_just-relax-t-shirt-ynt_.png" alt="Product 6">
+                <div class="product-rating">
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                </div>
+                <h4>Polar Skate Co Devil T Shirt</h4>
+                <p class="price">$65.00</p>
+            </div>
+            <div class="product-item">
+                <img src="No Pain No gain 💥.png" alt="Product 7">
+                <div class="product-rating">
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                </div>
+                <h4>Polar Skate Co Devil T Shirt</h4>
+                <p class="price">$65.00</p>
+            </div>
+            <div class="product-item">
+                <img src="tom&jerry.png" alt="Product 8">
+                <div class="product-rating">
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-solid fa-star star-yellow"></i>
+                    <i class="fa-regular fa-star star-yellow"></i>
+                </div>
+                <h4>Polar Skate Co Devil T Shirt</h4>
+                <p class="price">$67.00</p>
+            </div>
+        </div>
+
+        <div class="load-more-container">
+            <button class="load-more-btn">LOAD MORE PRODUCTS</button>
+        </div>
+    </div>
+
+    <!-- Sección Instagram -->
+    <div class="instagram-section">
+        <div class="instagram-title">
+            <h2>INSTAGRAM</h2>
+            <p class="instagram-subtitle">@FOLLOW US ON INSTAGRAM AND TAG YOUR PURCHASES WITH #ORITINA</p>
+        </div>
+
+        <div class="instagram-grid">
+            <div class="instagram-item">
+                <img src="5eb928fb8ad34fdc79532c6ea785a515.jpg" alt="Instagram 1">
+                <div class="instagram-overlay">
+                    <span class="instagram-icon">📷</span>
+                </div>
+            </div>
+            <div class="instagram-item">
+                <img src="6bf4987455853e21b9d188c3e327f6f2.jpg" alt="Instagram 2">
+                <div class="instagram-overlay">
+                    <span class="instagram-icon">📷</span>
+                </div>
+            </div>
+            <div class="instagram-item">
+                <img src="97521575d8a47399aa9aee9286bdf6fe.jpg" alt="Instagram 3">
+                <div class="instagram-overlay">
+                    <span class="instagram-icon">📷</span>
+                </div>
+            </div>
+            <div class="instagram-item">
+                <img src="caee77e1dcfc9ed1156e30b967dfb66c.jpg" alt="Instagram 4">
+                <div class="instagram-overlay">
+                    <span class="instagram-icon">📷</span>
+                </div>
+            </div>
+            <div class="instagram-item">
+                <img src="de9f183bdd05f9be11a038c2f37a4506.jpg" alt="Instagram 5">
+                <div class="instagram-overlay">
+                    <span class="instagram-icon">📷</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Garantías -->
+    <div class="guarantees-section">
+        <div class="guarantees-container">
+            <div class="guarantee-item">
+                <div class="guarantee-icon">🚚</div>
+                <h3>Free Delivery From $ 250</h3>
+                <p>Send perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium ipsum
+                    dolor sit amet</p>
+            </div>
+            <div class="guarantee-item">
+                <div class="guarantee-icon">💰</div>
+                <h3>Money Back Guarantee</h3>
+                <p>Send perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium ipsum
+                    dolor sit amet</p>
+            </div>
+            <div class="guarantee-item">
+                <div class="guarantee-icon">✓</div>
+                <h3>Authenticity 100% Guaranteed</h3>
+                <p>Send perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium ipsum
+                    dolor sit amet</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-content">
+            <!-- Columna 1: Logo y About -->
+            <div class="footer-column">
+                <div class="footer-logo">ORITINA</div>
+                <ul>
+                    <li>About us</li>
+                    <li>We in press</li>
+                    <li>Brand customers</li>
+                    <li>Meet out team</li>
+                    <li>Affiliate</li>
+                    <li>Contact & Support</li>
+                </ul>
+            </div>
+
+            <!-- Columna 2: My Account -->
+            <div style="margin-top: 50px;" class="footer-column">
+                <ul>
+                    <li>Contact Us</li>
+                    <li>My Cart</li>
+                    <li>Delivery</li>
+                    <li>Return</li>
+                    <li>FAQ's</li>
+                    <li>Coupon & loyalty</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p style="color: #999; font-size: 13px; margin-bottom: 15px;">
+                    Sign up to get the latest news, updates and amazing offers.
+                </p>
+                <form class="newsletter-form">
+                    <input id="email" type="email" class="newsletter-input" placeholder="Your Email Address">
+                    <button type="submit" class="newsletter-btn">SUSCRIBE</button>
+                </form>
+                <div class="social-icons">
+                    <div class="social-icons">
+                        <div class="social-icon"><i class="fa-brands fa-facebook-f"></i></div>
+                        <div class="social-icon"><i class="fa-brands fa-twitter"></i></div>
+                        <div class="social-icon"><i class="fa-brands fa-google-plus-g"></i></div>
+                        <div class="social-icon"><i class="fa-brands fa-instagram"></i></div>
+                        <div class="social-icon"><i class="fa-brands fa-youtube"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna 4: Newsletter y Contact -->
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span><i class="fa-solid fa-house" style="color: white;"></i></span>
+                        <div>Address: 829 Tellaphan Street, Vivekpuram puring, Sydney / Alaska - 457 854785</div>
+                    </div>
+                    <div class="contact-item">
+                        <span><i class="fa-solid fa-envelope" style="color: white;"></i></span>
+                        <div>Email: Oritina@gmail.com (or)<br>Denver.residence</div>
+                    </div>
+                    <div class="contact-item">
+                        <span><i class="fa-solid fa-square-phone" style="color: white;"></i></span>
+                        <div>+ 0012-345-67890</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Copyright © 2016 design by <strong>Visualthemes</strong>. All rights reserved</p>
+            <div class="payment-methods">
+                <div class="payment-icon"><i class="fa-brands fa-cc-visa"></i></div>
+                <div class="payment-icon"><i class="fa-brands fa-cc-mastercard"></i></div>
+                <div class="payment-icon"><i class="fa-brands fa-cc-amex"></i></div>
+                <div class="payment-icon"><i class="fa-brands fa-cc-paypal"></i></div>
+                <div class="payment-icon"><i class="fa-brands fa-cc-discover"></i></div>
+                <p id="letra-sola">t</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
